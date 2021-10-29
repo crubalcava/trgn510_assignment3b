@@ -1,5 +1,5 @@
 # trgn_assignment3bssignment 3B
-# extract_phonenum.py
+##  extract_phonenum.py
 
 ### Usage
 * python3 extract_phonenum.py
@@ -7,52 +7,41 @@
 
 ### Description
 * Extracts phone numbers from a text file, and prints formatted phone numbers.
-* One-line per phone number formatted as [+][country code] ([AreaCode]) [local phone number]. 
-* [+][country code] optional output if number is international. Create a script called extract_phonenum.py which extracts phone numbers from text file
+* One-line per phone number formatted as [+][country code] ([AreaCode]) [local phone number].
+* Create a script called extract_phonenum.py which extracts phone numbers from text file
 
 ### Known Issues
-* This program will only work for phone numbers that are formatted as [+][country code] ([AreaCode]) [local phone number]. 
-    * The local number needs to be formatted as such "'+'[any string of #, 0-9]'space'([any string of # > 2, 0-9 enclosed in parenthesis])'space'[any string of # > 3, 0-9]'-'[any string of # > 3, 0-9]". For example +1 (818) 818-8188 or (818) 818-8188 will also work.
+* This program will only work for phone numbers that are formatted as [+][country code] ([AreaCode]) [local phone number].
+    * To format a match you can try to use print('+%s (%s) %s-%s').
 
-# ens2hugo.py
+##  ens2hugo.py
 ### Usage
-* python3 ens2hugo.py [-f][0-9] [file]
-* Options
-    * -f An optional flag where -f is followed by a number 0-9, such as ensg2hugo.py -f2 expression_analysis.tsv
+* python3 ens2hugo.py [file]
+* Use the following repository to convert gtf file to csv for usage of this script: https://github.com/zyxue/gtf2csv.git
 
 ### Description
-* Key hints. You need to read the Homo_sapiens.GRCh37.75.gtf to create a dictionary, whereby you lookup the Ensembl name and replace it with the HUGO name.
-* ```wget http://ftp.ensembl.org/pub/release-75/gtf/homo_sapiens/Homo_sapiens.GRCh37.75.gtf.gz.```
-* ```gunzip Homo_sapiens.GRCh37.75.gtf.gz"```
-* Use script ens2hugo.py to match gene_id to gene_name using ens2gene dictionary
-* Use ```mini.gtf``` for testing before running script with ```Homo_sapiens.GRCh37.75.gtf```
-###### Unit Test
-* Start your unit test by git clone https://github.com/davcraig75/rna files
+* You will need to download the Homo_sapiens.GRCh37.75.gtf yourself as it is too big to keep on the github.
 ```
-with open ('rna/expression_results.csv') as csv_file:
-   csv_reader = csv.reader(csv_file, delimiter=',')
-    line_count = 0
-    for row in csv_reader:
-        if row[0] in ens2gene:
-            row[0]=ens2gene[row[0]]
-            print(row)
-            print(ens2gene([row[0]], end=', ')
-``` 
+wget http://ftp.ENSEMBL.org/pub/release-75/gtf/homo_sapiens/Homo_sapiens.GRCh37.75.gtf.gz | gunzip
+```
+* The purpose of this script is to convert the ENSEMBL ID to HUGO ID in the file that is being called.
+###  Unit Test
+* Unit test can be found here: https://github.com/davcraig75/rna.git. 
+
 ### Known Issues
-* Confirm that gene_id and gene_name are matching using regex expression. This can be tricky as thre are many opportunities for mistakes in big files. 
-* The file has ensembles that are repeats thus the gene namnes found in the dictionary will be reassigned multiple times to the same. This is redundant and I could filter this out but I decided to keep this step for now.
+* Input file [-f] needs to be identified in the usage of the script, otherwise  -f parameter will be treated as the input file and give an error. 
+* Homo_sapiens file called in above needs to be in the main directory so script will know to call it. If it is not, you will need to specify directory within script.
+* Need to go in and specify the file names within the script and confirm that the file is in the main repository. If is is not, you will receive an error message and will need to specify the directory within the script. 
 
 # histogram.py
 ### Usage
-* python3 histogram.py [-f][0-9] [file] # name of the .csv file is included in the repository ```covid_local_adult_detention_fac.csv```
+* python3 histogram.py [file]
+* Unit test can be found here: https://github.com/davcraig75/rna.git
+* File used is trgn599.clinical.csv. 
+* Confirm that the file being used is in csv format.
 
 ### Description
 * Creates a histogram as a png from a file using the specified column in a tab delimited file.
-* Options
-    * -f An optional flag where -f is followed by a number 0-9 indicating which column to use to create the histogram.  If no option is selected, use the 2nd column
-* Should be using pandas and numpy to create histogram. 
-* Data file used in this example came from .csv file COVID-19 data set from [data.ca.gov/dataset](https://data.ca.gov/dataset/covid-19-in-local-adult-detention-facilities/resource/dadeb689-08e3-4fbd-ac09-c101bcb2f2b2)
-    * Needed to convert this .csv file to a .tsv file before creating the data plot
+
 ### Known Issues
-* ```ImportError: No module named matplotlib.pyplot```
-    * This issue has yet to be resolved on local machine. Fixes involve uninstalling and reinstalling ```matplotlib```, confirimg ```matplotlib``` in PATH, or chaning python library in your script from #!/usr/bin/python to #!/usr/bin/env python
+* To see different data from a separate column plotted, change the index col to desired column.
